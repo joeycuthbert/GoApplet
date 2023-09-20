@@ -1,10 +1,8 @@
 import processing.core.*;
-import java.util.ArrayList;
-import java.util.List;
+import processing.event.*;
 
 public class GoApp extends PApplet {
     GoWorld g;
-    List<PVector> circles = new ArrayList<>();
 
     public void settings() {
         this.size(700, 700);
@@ -16,14 +14,11 @@ public class GoApp extends PApplet {
 
     public void draw() {
         g.draw(this);
-        for (PVector circlePos : circles) {
-            g.drawCircle(this, circlePos.x, circlePos.y);
-        }
+        // g = g.update();
     }
 
-    public void mousePressed() {
-        PVector circlePos = new PVector(mouseX, mouseY);
-        circles.add(circlePos);
+    public void mousePressed(MouseEvent mev) {
+        g = g.mousePressed(mev);
     }
 
     public static void main(String[] args) {
