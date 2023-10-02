@@ -22,17 +22,24 @@ public class GoWorld {
 
 	public PApplet draw(PApplet c) {
 		board.draw(c);
-		
-        int width = 30;
-        int height = 30; 
+        int borderWidth;
+        int borderHeight; 
+        int sideLength;
         c.background(255); 
-        while(width < 700) {
-            c.line(width, 30, width, 670); 
-            width = width + 80; 
+        
+        borderWidth = 30;
+        borderHeight = 30; 
+        sideLength = 80;
+        while(borderWidth < 700) {
+            c.line(borderWidth, borderHeight, borderWidth, 670); 
+            borderWidth = borderWidth + sideLength; 
         }
-        while(height < 700) {
-            c.line(30, height, 670, height); 
-            height = height + 80; 
+        borderWidth = 30;
+        borderHeight = 30; 
+        sideLength = 80;
+        while(borderHeight < 700) {
+            c.line(borderWidth, borderHeight, 670, borderHeight); 
+            borderHeight = borderHeight + sideLength; 
         }
         
         for (PVector circlePos : circles) {
@@ -44,7 +51,8 @@ public class GoWorld {
 
     
     public void drawCircle(PApplet c, float x, float y) {
-        c.circle(x, y, 60);
+    	int diameter = 60;
+        c.circle(x, y, diameter);
     }
     
     
