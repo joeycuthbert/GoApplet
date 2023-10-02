@@ -38,20 +38,20 @@ class BlackStone implements IStone{
 
 }
 
-
+/*Represents a player in a game of GO*/
 class Player1 {
 	IStone white;
-	int cur;
+	boolean cur;
 	int capStones;
 
-	public Player1(IStone white, int cur, int capStones) {
+	public Player1(IStone white, boolean cur, int capStones) {
 		this.white = white;
 		this.cur = cur;
 		this.capStones = capStones;
 	}
 
 	public boolean curPlayer() {
-		return this.cur == 1;
+		return this.cur = true;
 	}
 
 	public int getCapturedStones() {
@@ -63,19 +63,20 @@ class Player1 {
 	}
 }
 
+/*Represents a player in a game of GO*/
 class Player2 {
 	IStone black;
-	int cur;
+	boolean cur;
 	int capStones;
 
-	public Player2(IStone black, int cur, int capStones) {
+	public Player2(IStone black, boolean cur, int capStones) {
 		this.black = black;
 		this.cur = cur;
 		this.capStones = capStones;
 	}
 
 	public boolean curPlayer() {
-		return this.cur == 2;
+		return this.cur = true;
 	}
 
 	public int getCapturedStones() {

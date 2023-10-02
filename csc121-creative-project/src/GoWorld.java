@@ -9,7 +9,7 @@ public class GoWorld {
     int rows;
     int columns; 
     List<PVector> circles = new ArrayList<>();
-    int currentPlayer;
+    
 
     public GoWorld(int rows, int columns){
         this.rows = rows; 
