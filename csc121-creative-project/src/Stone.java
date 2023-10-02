@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PVector;
 
 class WhiteStone {
 	int row;
@@ -34,4 +35,6 @@ class BlackStone{
 
 }
 
-
+//for (PVector circlePos : circles) {
+//    drawCircle(c, circlePos.x, circlePos.y);
+//}

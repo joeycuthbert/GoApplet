@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PVector;
 
 enum Intersection {
 	EMPTY, WHITE, BLACK
@@ -28,56 +29,31 @@ class Board {
 	}
 
 	public PApplet draw(PApplet c) {
-		
-		return c;
-	}
+        int borderWidth;
+        int borderHeight; 
+        int sideLength;
+        c.background(255); 
+        
+        borderWidth = 30;
+        borderHeight = 30; 
+        sideLength = 80;
+        while(borderWidth < 700) {
+            c.line(borderWidth, borderHeight, borderWidth, 670); 
+            borderWidth = borderWidth + sideLength; 
+        }
+        borderWidth = 30;
+        borderHeight = 30; 
+        sideLength = 80;
+        while(borderHeight < 700) {
+            c.line(borderWidth, borderHeight, 670, borderHeight); 
+            borderHeight = borderHeight + sideLength; 
+        }
+        
+        
+        
+        return c;
+    }
+
 
 }
 
-//class NineBoard implements IBoard{
-//	int rows;
-//	int columns;
-//	boolean curBoard;
-//
-//	NineBoard(int rows, int columns , boolean curBoard){
-//		this.rows = rows;
-//		this.columns = columns;
-//		this.curBoard = curBoard;
-//	}
-//
-//	public boolean currentBoard() {
-//		return this.curBoard = true;
-//	}
-//}
-//
-//class ThirteenBoard implements IBoard{
-//	int rows;
-//	int columns;
-//	boolean curBoard;
-//
-//	ThirteenBoard(int rows, int columns , boolean curBoard){
-//		this.rows = rows;
-//		this.columns = columns;
-//		this.curBoard = curBoard;
-//	}
-//
-//	public boolean currentBoard() {
-//		return this.curBoard = true;
-//	}
-//}
-//
-//class NineteenBoard implements IBoard{
-//	int rows;
-//	int columns;
-//	boolean curBoard;
-//
-//	NineteenBoard(int rows, int columns , boolean curBoard){
-//		this.rows = rows;
-//		this.columns = columns;
-//		this.curBoard = curBoard;
-//	}
-//
-//	public boolean currentBoard() {
-//		return this.curBoard = true;
-//	}
-//}
