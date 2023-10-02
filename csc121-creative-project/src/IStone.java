@@ -1,10 +1,6 @@
 import processing.core.PApplet;
 
-public interface IStone {
-
-}
-
-class WhiteStone implements IStone{
+class WhiteStone {
 	int row;
 	int col;
 
@@ -21,7 +17,7 @@ class WhiteStone implements IStone{
 
 }
 
-class BlackStone implements IStone{
+class BlackStone{
 	int row;
 	int col;
 
@@ -40,12 +36,12 @@ class BlackStone implements IStone{
 
 /*Represents a player in a game of GO*/
 class Player1 {
-	IStone white;
+	Intersection color;
 	boolean cur;
 	int capStones;
 
-	public Player1(IStone white, boolean cur, int capStones) {
-		this.white = white;
+	public Player1(Intersection color, boolean cur, int capStones) {
+		this.color = color;
 		this.cur = cur;
 		this.capStones = capStones;
 	}
@@ -65,12 +61,12 @@ class Player1 {
 
 /*Represents a player in a game of GO*/
 class Player2 {
-	IStone black;
+	Intersection color;
 	boolean cur;
 	int capStones;
 
-	public Player2(IStone black, boolean cur, int capStones) {
-		this.black = black;
+	public Player2(Intersection color, boolean cur, int capStones) {
+		this.color = color;
 		this.cur = cur;
 		this.capStones = capStones;
 	}

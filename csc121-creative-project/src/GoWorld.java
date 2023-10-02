@@ -6,17 +6,23 @@ import processing.core.PVector;
 import processing.event.MouseEvent; 
 
 public class GoWorld {
-    int rows;
-    int columns; 
+	Board board;
+	//Player[] player;
+	// int curP = 0 / 1;
     List<PVector> circles = new ArrayList<>();
     
 
-    public GoWorld(int rows, int columns){
-        this.rows = rows; 
-        this.columns = columns;  
-    }
+   
+    public GoWorld(Board board) {
+		this.board = board;
+	//	this.player[0] = new Player( Intersection.WHITE, .board.cols..)
+		//this.player = Intersection.WHITE;
+	}
 
-    public PApplet draw(PApplet c) {
+
+	public PApplet draw(PApplet c) {
+		board.draw(c);
+		
         int width = 30;
         int height = 30; 
         c.background(255); 
@@ -46,8 +52,11 @@ public class GoWorld {
     
         // translate the "physical" x,y of mev to "logical" grid locations row/col 
         
-        PVector circlePos = new PVector(mev.getX(), mev.getY());
-        circles.add(circlePos);
+    	// board.set( row, col,  player[curP].getColor() )
+    	//  curP = 1 - curP;  // swaps between 0 and 1
+    	
+        //PVector circlePos = new PVector(mev.getX(), mev.getY());
+        //circles.add(circlePos);
         return this;
     }
 

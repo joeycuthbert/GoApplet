@@ -4,12 +4,13 @@ import processing.event.*;
 public class GoApp extends PApplet {
     GoWorld g;
 
-    public void settings() {
+	public void settings() {
         this.size(700, 700);
     }
 
     public void setup() {
-        g = new GoWorld(9, 9);
+    	Board NineBoard = new Board(9,9);
+        g = new GoWorld(NineBoard);
     }
 
     public void draw() {

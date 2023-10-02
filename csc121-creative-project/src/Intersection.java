@@ -1,4 +1,4 @@
-
+/*
 public class Intersection {
 	IBoard board; 
 	boolean vacant;
@@ -8,3 +8,5 @@ public class Intersection {
 		this.vacant = vacant;
 	}
 }
+
+*/
