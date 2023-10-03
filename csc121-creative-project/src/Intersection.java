@@ -8,3 +8,4 @@ public class Intersection {
 		this.vacant = vacant;
 	}
 }
+
