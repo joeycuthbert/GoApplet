@@ -15,7 +15,7 @@ public class GoApp extends PApplet {
 
     public void draw() {
         g.draw(this);
-        // g = g.update();
+        // g = g.update(); 
     }
 
     public void mousePressed(MouseEvent mev) {

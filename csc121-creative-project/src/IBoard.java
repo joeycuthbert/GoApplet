@@ -10,6 +10,9 @@ class Board {
 	int rows;
 	int cols;
 
+	/*
+	 * constructor for the Board class. Creates a 1d array of length(number of intersections)  and all intersections as empty
+	 */
 	Board(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
@@ -24,10 +27,16 @@ class Board {
 		return pts[(row * this.cols) + col];
 	}
 
+	/*
+	 *  places a piece at row, column in the points list 
+	 */
 	public void set(int row, int col, Intersection pc) {
-		pts[(row * this.cols) + col] = pc;
+		pts[(row * this.cols) + col] = pc; 
 	}
 
+	/*
+	 * draws a 9x9 board
+	 */
 	public PApplet draw(PApplet c) {
         int borderWidth;
         int borderHeight; 
