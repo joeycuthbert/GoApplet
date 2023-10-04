@@ -23,6 +23,13 @@ public class GoWorld {
      * calls the draw method of the boards 
      */
 	public PApplet draw(PApplet c) { 
+	
+		for (PVector circlePos : circles) {
+		    float x = circlePos.x; 
+		    float y = circlePos.y;
+		    int diameter = 60;
+		    c.circle(x, y, diameter);
+		}
 		return board.draw(c);
     }
 
@@ -49,6 +56,16 @@ public class GoWorld {
     	
        // PVector circlePos = new PVector(mev.getX(), mev.getY());
         // circles.add(circlePos);
+    	int col = (int) (mev.getX() / 30);
+        int row = (int) (mev.getY() / 30);
+
+        // Place a circle on the nearest intersection
+        float x = col * 30 + 30 / 2;
+        float y = row * 30 + 30 / 2;
+        
+        circles.add(new PVector(x, y));
+        // Draw the circle at the calculated (x, y) position
+        
     	
         return this;
     }

@@ -63,6 +63,12 @@ class Board {
         return c;
     }
 
+	public int getIntersectionSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
 
 }
 
