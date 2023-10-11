@@ -9,9 +9,13 @@ public class GoWorld {
 	Board board;
 	//Player[] player;
 	// int curP = 0 / 1;
-    List<PVector> circles = new ArrayList<>();
     
 
+    
+    public static int GRID_SIZE = 80;
+    public static int GRID_MARGIN = 30;
+
+    
    
     public GoWorld(Board board) {
 		this.board = board;
@@ -23,13 +27,6 @@ public class GoWorld {
      * calls the draw method of the boards 
      */
 	public PApplet draw(PApplet c) { 
-	
-		for (PVector circlePos : circles) {
-		    float x = circlePos.x; 
-		    float y = circlePos.y;
-		    int diameter = 60;
-		    c.circle(x, y, diameter);
-		}
 		return board.draw(c);
     }
 
@@ -47,25 +44,55 @@ public class GoWorld {
      * Should handle the board actions when a the mouse is pressed 
      */
     
-    public GoWorld mousePressed(MouseEvent mev) {
+    /*
+     * given the y-position of a supposed mouse click, return which row the stone should lie on
+     * 
+     */
+    public static int logicalRow(int yPos) {
+    	return (yPos - GRID_MARGIN + (GRID_SIZE/2)) / GRID_SIZE;
+    	/*
+    	int rowSpace = 30;
+    	int rows = 9; 
+    	int row = -1; // talk to Dr. Hamid about this 
+    	for(int i = 0; i <= rows; i++) {
+    		if(((i * rowSpace + 15) > yPos) && ((i * rowSpace) < yPos)) {
+    			row = i;  
+    			break;
+    		}
+    	}
+    	return row;  
+    	*/
+    }
     
-        // translate the "physical" x,y of mev to "logical" grid locations row/col 
+    public static int logicalCol(int xPos) {
+    	return (xPos - 30 /* align to 0 */ + 40 /* center on the grid line */) / 80;
+    	/*int colSpace = 30;
+    	int cols = 9; 
+    	int col = -1; // talk to Dr. Hamid about this 
+    	for(int i = 0; i <= cols; i++) {
+    		if(((i * colSpace + 15) > xPos) && ((i * colSpace) < xPos)) {
+    			col = i;  
+    			break;
+    		}
+    	}
+    	return col; 
+    	*/ 
+    }
+    
+    public static int physicalX(int col) {
+    	return (col * GRID_SIZE) + GRID_MARGIN;
+    }
+    
+    public GoWorld mousePressed(MouseEvent mev) {
+    	int logCol = this.logicalCol(mev.getX()); 
+        int logRow = this.logicalRow(mev.getY());
         
-    	// board.set( row, col,  player[curP].getColor() )
-       //  curP = 1 - curP;  // swaps between 0 and 1
-    	
-       // PVector circlePos = new PVector(mev.getX(), mev.getY());
-        // circles.add(circlePos);
-    	int col = (int) (mev.getX() / 30);
-        int row = (int) (mev.getY() / 30);
-
-        // Place a circle on the nearest intersection
-        float x = col * 30 + 30 / 2;
-        float y = row * 30 + 30 / 2;
+        board.set(logRow, logCol, this.board.getColor());  
+        this.board.rotatePlayer();  // TODO: get rid of this
         
-        circles.add(new PVector(x, y));
-        // Draw the circle at the calculated (x, y) position
-        
+        // int n = board.detectCaptures(player[curP]);  // detect number of captures by the current player
+        // score += n;
+        // curP = 1 - curP;   // flips between 0 and 1
     	
         return this;
     }

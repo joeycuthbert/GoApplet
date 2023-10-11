@@ -9,13 +9,13 @@ public class GoApp extends PApplet {
     }
 
     public void setup() {
-    	Board NineBoard = new Board(9,9);
-        g = new GoWorld(NineBoard);
+    	Board nineBoard = new Board(9,9, 0);
+        g = new GoWorld(nineBoard);
     }
 
-    public void draw() {
-        g.draw(this);
+    public void draw() {        
         // g = g.update(); 
+        g.draw(this);
     }
 
     public void mousePressed(MouseEvent mev) {
