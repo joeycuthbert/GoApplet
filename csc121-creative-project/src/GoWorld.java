@@ -87,8 +87,12 @@ public class GoWorld {
     	int logCol = this.logicalCol(mev.getX()); 
         int logRow = this.logicalRow(mev.getY());
         
-        board.set(logRow, logCol, this.board.getColor());  
-        this.board.rotatePlayer();  // TODO: get rid of this
+        
+        if (this.board.get(logRow, logCol) == Intersection.EMPTY) {
+        	board.set(logRow, logCol, this.board.getColor());  
+      
+        	this.board.rotatePlayer();  // TODO: get rid of this
+        }
         
         // int n = board.detectCaptures(player[curP]);  // detect number of captures by the current player
         // score += n;
