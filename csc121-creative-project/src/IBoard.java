@@ -31,7 +31,7 @@ class Board {
 		this.rows = rows;
 		this.cols = cols;
 		this.player = player; 
-		pts = new Intersection[(1 + rows) * (1 + cols)];
+		pts = new Intersection[(rows) * (cols)];
 		for (int i = 0; i < this.pts.length; i++) {
 			this.pts[i] = Intersection.EMPTY;
 		}
@@ -117,16 +117,61 @@ class Board {
 	/*
 	 * given a location for a piece in the pts[] array, a vertical and horizontal direction to check
 	 * and a piece color, determine if the piece is touching a piece of opposite color in the given direction
-	 * 
+	 * WHEN USNG THIS METHOD:
+	 *			vDir and hDir should be either -1, 0, or 1
+	 *			if vDir != 0, then hDir should equal 0 and vice versa
 	 */
 	public boolean checkSurrInDir(int loc, int vDir, int hDir, Intersection color) {
 		int listPos = loc + (vDir * this.cols) + hDir; 
 		
-		if ( (pts[listPos] == color) || (pts[listPos] == Intersection.EMPTY) ) {
+		if (this.offBoard(loc, hDir, vDir)){
+			return true; 
+		}
+		if( pts[listPos] == color ) {
+			return checkSurrInDir(listPos, vDir, hDir, color);
+		}
+		else if( pts[listPos] == Intersection.EMPTY) {
 			return false;
 		}
+		else {
+			return true;
+		}
+
+	}
+	
+	/*
+	 * HELPER METHOD FOR checkSurrInDir
+	 * Because we represent our board as a 1-d array of points, it is hard to 
+	 * represent when something is off the board to the right or left.
+	 * This helper method determines if a vertical horizontal move to the left or right or up or down is off the board
+	 */
+	public boolean offBoard(int loc, int hDir, int vDir) {
+		if( ((loc + hDir) < 0) || ((loc + hDir) > this.pts.length - 1) ) {
+			return true;
+		}
+		else if( ((loc + (vDir * this.cols)) < 0) || ((loc + (vDir * this.cols)) > this.pts.length - 1) ) {
+			return true;
+		}
+		else if( (hDir < 0) && (loc % this.cols == 0) ) { 
+			// case where loc is in first column and trying to move horizontally to the left
+			return true;
+		}
+		else if( (hDir > 0) && (loc % this.cols == 8) ) { 
+			// case where loc is in the last column and trying to move horizontally to the right
+			return true;
+		}
 		
-		return true;
+		return false;
+	}
+	
+	public boolean checkSurr(int loc, Intersection color) {
+		return 
+				this.checkSurrInDir(loc, 1, 0, color) && 
+				this.checkSurrInDir(loc, -1, 0, color) &&
+				this.checkSurrInDir(loc, 0, 1, color) &&
+				this.checkSurrInDir(loc, 0, -1, color); 
+					
+		 
 	}
 
 }

@@ -20,6 +20,18 @@ class GoWorldTest {
 		assertEquals(51, testBoard.getLoc(5,  6)); 
 	}
 	
+	@Test
+	void testoffBoard() {
+		assertTrue(testBoard.offBoard(testBoard.getLoc(0, 0), -1, 0)); // in top left corner, trying to move to the left
+		assertTrue(testBoard.offBoard(testBoard.getLoc(8, 8), 1, 0)); // in bottom right corner, trying to move to the right
+		assertTrue(testBoard.offBoard(testBoard.getLoc(4, 0), -1, 0)); // on left side, trying to move to the left
+		assertTrue(testBoard.offBoard(testBoard.getLoc(4, 8), 1, 0)); // on right side, trying to move to the right
+		
+		assertTrue(testBoard.offBoard(testBoard.getLoc(0, 5), 0, -1)); // on top row, trying to move up
+		assertTrue(testBoard.offBoard(testBoard.getLoc(8, 5), 0, 1));  // on bottom row, trying to move down
+		
+		
+	}
 	
 	@Test
 	void testcheckSurrInDir() {
@@ -38,12 +50,25 @@ class GoWorldTest {
 		assertFalse(testBoard.checkSurrInDir(testBoard.getLoc(5,6), 1, 0, Intersection.WHITE)); 
 		assertFalse(testBoard.checkSurrInDir(testBoard.getLoc(5,6), -1, 0, Intersection.WHITE)); 
 		assertFalse(testBoard.checkSurrInDir(testBoard.getLoc(5,6), 0, 1, Intersection.WHITE)); 
-		assertFalse(testBoard.checkSurrInDir(testBoard.getLoc(5,6), 0, -1, Intersection.WHITE)); 
+		assertFalse(testBoard.checkSurrInDir(testBoard.getLoc(5,6), 0, -1, Intersection.WHITE));  
 		
 		
+	}
+	
+	@Test
+	void testcheckSurr() {
+		testBoard.set(0, 1, Intersection.BLACK);
+		testBoard.set(2, 1, Intersection.BLACK);
+		testBoard.set(1, 0, Intersection.BLACK);
+		testBoard.set(1, 2, Intersection.BLACK);
+		testBoard.set(1, 1, Intersection.WHITE); // this white stone is completely surrounded by black stones 
+		testBoard.set(5, 6, Intersection.WHITE); // this white stone is not surrounded by any black stones
 		
+		assertTrue(testBoard.checkSurr(testBoard.getLoc(1, 1), Intersection.WHITE));
 		
+		testBoard.set(0, 1, Intersection.WHITE);
 		
+		// assertTrue(testBoard.checkSurr(testBoard.getLoc(0, 1), Intersection.WHITE)); fails
 	}
 	
 }
