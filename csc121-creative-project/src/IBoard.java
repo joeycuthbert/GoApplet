@@ -45,9 +45,18 @@ class Board {
 	/*
 	 *  places a piece at row, column in the points list 
 	 */
+	
 	public void set(int row, int col, Intersection pc) {
 		pts[(row * this.cols) + col] = pc; 
-	} 
+	}
+	
+	/*
+	 * given a row and col, return the positions respective location in the pts[] array
+	 */
+	
+	public int getLoc(int row, int col) {
+		return (row * this.cols) + col; 
+	}
 
 	/*
 	 * draws a 9x9 board
@@ -103,6 +112,21 @@ class Board {
 	public int getIntersectionSize() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	/*
+	 * given a location for a piece in the pts[] array, a vertical and horizontal direction to check
+	 * and a piece color, determine if the piece is touching a piece of opposite color in the given direction
+	 * 
+	 */
+	public boolean checkSurrInDir(int loc, int vDir, int hDir, Intersection color) {
+		int listPos = loc + (vDir * this.cols) + hDir; 
+		
+		if ( (pts[listPos] == color) || (pts[listPos] == Intersection.EMPTY) ) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }
