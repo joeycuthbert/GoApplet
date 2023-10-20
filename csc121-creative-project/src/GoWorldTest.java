@@ -65,7 +65,6 @@ class GoWorldTest {
 		testBoard.set(5, 6, Intersection.WHITE); // this white stone is not surrounded by any black stones
 
 		assertTrue(testBoard.checkSurr(testBoard.getLoc(1, 1), Intersection.WHITE));
-<<<<<<< HEAD
 		
 		testBoard.set(0, 0, Intersection.BLACK);
 		testBoard.set(0, 2, Intersection.BLACK);
@@ -91,12 +90,4 @@ class GoWorldTest {
 		
 		
 	}
-=======
-
-		testBoard.set(0, 1, Intersection.WHITE);
-
-		// assertTrue(testBoard.checkSurr(testBoard.getLoc(0, 1), Intersection.WHITE)); fails
-	}
-
->>>>>>> d16831037d358e9d9315f4f2f991389160e15b4b
 }
