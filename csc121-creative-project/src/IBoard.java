@@ -1,5 +1,8 @@
+import java.awt.Color;
+
 import processing.core.PApplet;
 import processing.core.PVector;
+
 
  enum Intersection {
 	EMPTY, WHITE, BLACK;
@@ -8,11 +11,15 @@ import processing.core.PVector;
 		if (this != EMPTY) {
 			if (this == WHITE) {
 				c.fill(255);
+				
+				
 			} else if (this == BLACK) {
 				c.fill(0);
+				
+				
 			}
-			c.stroke(0);
-			c.circle(x, y, GoWorld.GRID_MARGIN);
+			
+			c.circle(x, y, GoWorld.STONE_SIZE );
 		}
 		return c;
 	}
@@ -65,7 +72,8 @@ class Board {
         int borderWidth;
         int borderHeight; 
         int sideLength;
-        c.background(255); 
+        
+        c.background(220, 196, 149); 
         
         borderWidth = 30;
         borderHeight = 30; 
