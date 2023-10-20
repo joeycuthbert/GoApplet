@@ -65,7 +65,6 @@ class Board {
 	 * draws a 9x9 board
 	 */
 	public PApplet draw(PApplet c) {
-<<<<<<< HEAD
         int borderWidth;
         int borderHeight; 
         int sideLength;
@@ -101,43 +100,6 @@ class Board {
     }
 	
 	
-=======
-		int borderWidth;
-		int borderHeight; 
-		int sideLength;
-
-		c.background(220, 196, 149); 
-
-		borderWidth = 30;
-		borderHeight = 30; 
-		sideLength = 80;
-		while(borderWidth < 700) {
-			c.stroke(0);
-			c.line(borderWidth, borderHeight, borderWidth, 670); 
-			borderWidth = borderWidth + sideLength; 
-		}
-
-		borderWidth = GoWorld.GRID_MARGIN;
-		borderHeight = GoWorld.GRID_MARGIN; 
-		sideLength = GoWorld.GRID_SIZE;
-		while(borderHeight < 700) {
-			c.stroke(0);
-			c.line(borderWidth, borderHeight, 670, borderHeight); 
-			borderHeight = borderHeight + sideLength; 
-		}
-
-		for (int row = 0; row <= 8; row++) {
-			for (int col = 0; col <= 8; col++) {
-				int x = GoWorld.physicalX(col);
-				int y = GoWorld.physicalX(row);
-				get(row, col).draw(c, x, y);
-			}
-		}
-
-		return c;
-	}
-
->>>>>>> d16831037d358e9d9315f4f2f991389160e15b4b
 	public Intersection getColor() {
 		if(this.player == 0) {
 			return Intersection.BLACK; 
@@ -200,12 +162,7 @@ class Board {
 			// case where loc is in first column and trying to move horizontally to the left
 			return true;
 		}
-<<<<<<< HEAD
 		else if( (hDir > 0) && (loc % this.cols == this.cols -1) ) { 
-=======
-		else if( (hDir > 0) && (loc % this.cols == 8) ) { 
-
->>>>>>> d16831037d358e9d9315f4f2f991389160e15b4b
 			// case where loc is in the last column and trying to move horizontally to the right
 			return true;
 		}
