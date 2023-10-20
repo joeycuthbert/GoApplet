@@ -66,9 +66,28 @@ class GoWorldTest {
 		
 		assertTrue(testBoard.checkSurr(testBoard.getLoc(1, 1), Intersection.WHITE));
 		
+		testBoard.set(0, 0, Intersection.BLACK);
+		testBoard.set(0, 2, Intersection.BLACK);
 		testBoard.set(0, 1, Intersection.WHITE);
 		
-		// assertTrue(testBoard.checkSurr(testBoard.getLoc(0, 1), Intersection.WHITE)); fails
+		assertTrue(testBoard.checkSurr(testBoard.getLoc(1,1), Intersection.WHITE)); 
+		assertTrue(testBoard.checkSurr(testBoard.getLoc(0,1), Intersection.WHITE)); 
+		
+		
+		testBoard.set(0, 8, Intersection.WHITE);
+		testBoard.set(0, 7, Intersection.BLACK);
+		testBoard.set(1, 8, Intersection.BLACK);
+		testBoard.set(1, 7, Intersection.WHITE);
+		
+		assertTrue(testBoard.checkSurr(testBoard.getLoc(0,8), Intersection.WHITE));
+		assertFalse(testBoard.checkSurr(testBoard.getLoc(1,8), Intersection.BLACK)); 
+		/*
+		 * the following two test cases check if a location is surrounded but for the opposite color of the stone that occupies
+		 * that location
+		 */
+		assertFalse(testBoard.checkSurr(testBoard.getLoc(1,8), Intersection.WHITE));
+		assertFalse(testBoard.checkSurr(testBoard.getLoc(0,8), Intersection.BLACK));
+		
+		
 	}
-	
 }
