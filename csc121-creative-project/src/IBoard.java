@@ -10,10 +10,12 @@ import processing.core.PVector;
 	public PApplet draw(PApplet c, int x, int y) {
 		if (this != EMPTY) {
 			if (this == WHITE) {
+				c.stroke(225);
 				c.fill(255);
 				
 				
 			} else if (this == BLACK) {
+				c.stroke(0);
 				c.fill(0);
 				
 				
@@ -79,6 +81,7 @@ class Board {
         borderHeight = 30; 
         sideLength = 80;
         while(borderWidth < 700) {
+        	c.stroke(0);
             c.line(borderWidth, borderHeight, borderWidth, 670); 
             borderWidth = borderWidth + sideLength; 
         }
@@ -86,6 +89,7 @@ class Board {
         borderHeight = GoWorld.GRID_MARGIN; 
         sideLength = GoWorld.GRID_SIZE;
         while(borderHeight < 700) {
+        	c.stroke(0);
             c.line(borderWidth, borderHeight, 670, borderHeight); 
             borderHeight = borderHeight + sideLength; 
         }

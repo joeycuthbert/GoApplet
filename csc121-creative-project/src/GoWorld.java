@@ -14,7 +14,7 @@ public class GoWorld {
     
     public static int GRID_SIZE = 80;
     public static int GRID_MARGIN = 30;
-    public static int STONE_SIZE = 50;
+    public static int STONE_SIZE = 45;
 
     
    
