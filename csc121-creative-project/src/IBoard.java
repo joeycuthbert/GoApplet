@@ -90,8 +90,8 @@ class Board {
             borderHeight = borderHeight + sideLength; 
         }
         
-        for (int row = 0; row <= 8; row++) {
-        	for (int col = 0; col <= 8; col++) {
+        for (int row = 0; row <= this.rows -1; row++) {
+        	for (int col = 0; col <= this.cols -1; col++) {
         		int x = GoWorld.physicalX(col);
         		int y = GoWorld.physicalX(row);
         		get(row, col).draw(c, x, y);
@@ -164,7 +164,7 @@ class Board {
 			// case where loc is in first column and trying to move horizontally to the left
 			return true;
 		}
-		else if( (hDir > 0) && (loc % this.cols == 8) ) { 
+		else if( (hDir > 0) && (loc % this.cols == this.cols -1) ) { 
 			// case where loc is in the last column and trying to move horizontally to the right
 			return true;
 		}
