@@ -6,7 +6,7 @@ import processing.core.PVector;
 import processing.event.MouseEvent; 
 
 public class GoWorld {
-	Board board;
+	private Board board;
 
 	public static int GRID_SIZE = 80;
 	public static int GRID_MARGIN = 30;

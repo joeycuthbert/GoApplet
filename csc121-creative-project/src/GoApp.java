@@ -2,7 +2,7 @@ import processing.core.*;
 import processing.event.*;
 
 public class GoApp extends PApplet {
-    GoWorld g;
+    private GoWorld g;
 
 	public void settings() {
         this.size(700, 700);
