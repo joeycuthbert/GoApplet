@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import processing.core.PApplet;
-import processing.core.PVector;
 import processing.event.MouseEvent; 
 
 public class GoWorld {
@@ -47,11 +43,19 @@ public class GoWorld {
 	}
 
 	public GoWorld mousePressed(MouseEvent mev) {
-		int logCol = this.logicalCol(mev.getX()); 
-		int logRow = this.logicalRow(mev.getY());
+		int logCol = logicalCol(mev.getX()); 
+		int logRow = logicalRow(mev.getY());
 
 		if (this.board.get(logRow, logCol) == Intersection.EMPTY) {
 			board.set(logRow, logCol, this.board.getColor());  
+			
+			boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); 
+			
+			for(int i = 0; i < this.board.pts.length; i++) {
+				if(deleteArr[i]) {
+					this.board.pts[i] = Intersection.EMPTY; 
+				}
+			}
 
 			this.board.rotatePlayer();  // TODO: get rid of this
 		}

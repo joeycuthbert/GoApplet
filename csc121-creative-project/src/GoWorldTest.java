@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 class GoWorldTest {
@@ -88,6 +90,39 @@ class GoWorldTest {
 		assertFalse(testBoard.checkSurr(testBoard.getLoc(1,8), Intersection.WHITE));
 		assertFalse(testBoard.checkSurr(testBoard.getLoc(0,8), Intersection.BLACK));
 		
+	}
+	
+	@Test 
+	void testCheckAllSurr() {
+		testBoard.set(0, 1, Intersection.BLACK);
+		testBoard.set(2, 1, Intersection.BLACK);
+		testBoard.set(1, 0, Intersection.BLACK);
+		testBoard.set(1, 2, Intersection.BLACK);
+		testBoard.set(1, 1, Intersection.WHITE); // this white stone is completely surrounded by black stones 
+		testBoard.set(5, 6, Intersection.WHITE); // this white stone is not surrounded by any black stones
 		
+		boolean[] testArr = new boolean[81];
+		testArr[testBoard.getLoc(1, 1)] = true; 
+		
+		assertTrue(Arrays.equals(testArr, testBoard.checkAllSurr(Intersection.WHITE))); 
+		assertFalse(Arrays.equals(testArr, testBoard.checkAllSurr(Intersection.BLACK))); 
+		
+		testBoard.set(0, 0, Intersection.BLACK);
+		testBoard.set(0, 2, Intersection.BLACK);
+		testBoard.set(0, 1, Intersection.WHITE);
+		testArr[testBoard.getLoc(0, 1)] = true; 
+		
+		assertTrue(Arrays.equals(testArr, testBoard.checkAllSurr(Intersection.WHITE))); 
+		
+		testBoard.set(0, 8, Intersection.WHITE);
+		testBoard.set(0, 7, Intersection.BLACK);
+		testBoard.set(1, 8, Intersection.BLACK);
+		testBoard.set(1, 7, Intersection.WHITE);
+		
+		testArr[testBoard.getLoc(0, 8)] = true; 
+		
+		assertTrue(Arrays.equals(testArr, testBoard.checkAllSurr(Intersection.WHITE))); 
+		
+	
 	}
 }

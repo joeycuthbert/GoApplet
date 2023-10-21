@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-import processing.core.PVector;
 
 enum Intersection {
 	EMPTY, WHITE, BLACK;
@@ -111,6 +110,17 @@ class Board {
 
 		return Intersection.EMPTY;  // if player is either 1 or 0 then when we want to return empty it never will
 	}
+	
+	public Intersection getOppColor() {
+		if(this.getColor() == Intersection.BLACK) {
+			return Intersection.WHITE; 
+		}
+		else if(this.getColor() == Intersection.WHITE) {
+			return Intersection.BLACK; 
+		}
+		
+		return Intersection.EMPTY; 
+	}
 
 	/*
 	 * Switches between player 1 and 2
@@ -177,7 +187,17 @@ class Board {
 				this.checkSurrInDir(loc, 0, 1, color) &&
 				this.checkSurrInDir(loc, 0, -1, color); 
 
-
+	}
+	
+	public boolean[] checkAllSurr(Intersection color){ // need to write test cases and evaluate helper methods.
+		boolean[] s = new boolean[this.pts.length]; 
+		for(int i = 0; i < this.pts.length; i++) {
+			if(checkSurr(i, color) && this.pts[i] == color) {
+				s[i] = true; 
+			}
+		}
+		
+		return s; 
 	}
 
 }
