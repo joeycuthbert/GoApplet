@@ -22,10 +22,10 @@ enum Intersection {
 }
 
 class Board {
-	Intersection[] pts; // the intersection points on the board
-	int rows;
-	int cols;
-	int player; 
+	private Intersection[] pts; // the intersection points on the board
+	private int rows;
+	private int cols;
+	private int player; 
 
 	/*
 	 * constructor for the Board class. Creates a 1d array of length(number of intersections)  and all intersections as empty
