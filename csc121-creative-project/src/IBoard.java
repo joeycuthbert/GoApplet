@@ -34,15 +34,15 @@ class Board {
 		this.rows = rows;
 		this.cols = cols;
 		this.player = player; 
-		pts = new Intersection[(rows) * (cols)];
-		for (int i = 0; i < this.pts.length; i++) {
-			this.pts[i] = Intersection.EMPTY;
+		setPts(new Intersection[(rows) * (cols)]);
+		for (int i = 0; i < this.getPts().length; i++) {
+			this.getPts()[i] = Intersection.EMPTY;
 		}
 	}
 
 	/* return the piece at the given row and col */
 	public Intersection get(int row, int col) {
-		return pts[(row * this.cols) + col];
+		return getPts()[(row * this.cols) + col];
 	}
 
 	/*
@@ -50,7 +50,7 @@ class Board {
 	 */
 
 	public void set(int row, int col, Intersection pc) {
-		pts[(row * this.cols) + col] = pc; 
+		getPts()[(row * this.cols) + col] = pc; 
 	}
 
 	/*
@@ -142,10 +142,10 @@ class Board {
 		if (this.offBoard(loc, hDir, vDir)){
 			return true; 
 		}
-		if( pts[listPos] == color ) {
+		if( getPts()[listPos] == color ) {
 			return checkSurrInDir(listPos, vDir, hDir, color);
 		}
-		else if( pts[listPos] == Intersection.EMPTY) {
+		else if( getPts()[listPos] == Intersection.EMPTY) {
 			return false;
 		}
 		else {
@@ -161,10 +161,10 @@ class Board {
 	 * This helper method determines if a vertical horizontal move to the left or right or up or down is off the board
 	 */
 	public boolean offBoard(int loc, int hDir, int vDir) {
-		if( ((loc + hDir) < 0) || ((loc + hDir) > this.pts.length - 1) ) {
+		if( ((loc + hDir) < 0) || ((loc + hDir) > this.getPts().length - 1) ) {
 			return true;
 		}
-		else if( ((loc + (vDir * this.cols)) < 0) || ((loc + (vDir * this.cols)) > this.pts.length - 1) ) {
+		else if( ((loc + (vDir * this.cols)) < 0) || ((loc + (vDir * this.cols)) > this.getPts().length - 1) ) {
 			return true;
 		}
 		else if( (hDir < 0) && (loc % this.cols == 0) ) { 
@@ -190,14 +190,22 @@ class Board {
 	}
 	
 	public boolean[] checkAllSurr(Intersection color){ // need to write test cases and evaluate helper methods.
-		boolean[] s = new boolean[this.pts.length]; 
-		for(int i = 0; i < this.pts.length; i++) {
-			if(checkSurr(i, color) && this.pts[i] == color) {
+		boolean[] s = new boolean[this.getPts().length]; 
+		for(int i = 0; i < this.getPts().length; i++) {
+			if(checkSurr(i, color) && this.getPts()[i] == color) {
 				s[i] = true; 
 			}
 		}
 		
 		return s; 
+	}
+
+	public Intersection[] getPts() {
+		return pts;
+	}
+
+	public void setPts(Intersection[] pts) {
+		this.pts = pts;
 	}
 
 }
