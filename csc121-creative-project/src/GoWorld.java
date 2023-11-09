@@ -51,9 +51,9 @@ public class GoWorld {
 			
 			boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); 
 			
-			for(int i = 0; i < this.board.pts.length; i++) {
+			for(int i = 0; i < this.board.getPts().length; i++) {
 				if(deleteArr[i]) {
-					this.board.pts[i] = Intersection.EMPTY; 
+					this.board.getPts()[i] = Intersection.EMPTY; 
 				}
 			}
 
