@@ -22,7 +22,7 @@ enum Intersection {
 }
 
 class Board {
-	private Intersection[] pts; // the intersection points on the board
+	Intersection[] pts; // the intersection points on the board
 	private int rows;
 	private int cols;
 	private int player; 

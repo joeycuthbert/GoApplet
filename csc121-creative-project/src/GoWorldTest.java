@@ -125,8 +125,7 @@ class GoWorldTest {
 		
 	
 	}
-}
-	}}
+	}
 //	@Test
 //	void testXPattern() {
 //		//setting black Stones
