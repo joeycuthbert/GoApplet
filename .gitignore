@@ -1,5 +1,9 @@
+bin/
+
 # Compiled class file
 *.class
+*.classpath
+*.project
 
 # Log file
 *.log
@@ -23,3 +27,4 @@
 hs_err_pid*
 replay_pid*
 .DS_Store
+csc121-creative-project/.classpath
