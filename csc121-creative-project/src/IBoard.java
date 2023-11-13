@@ -1,5 +1,3 @@
-import java.util.HashSet;
-import java.util.Set;
 package src;
 
 import java.io.PrintWriter;
@@ -29,8 +27,6 @@ enum Intersection {
 
 class Board {
 	private Intersection[] pts; // the intersection points on the board
-	private Set<Integer> visited;
-	private boolean[] booPar;
 	private int rows;
 	private int cols;
 	private int player; 
@@ -46,8 +42,6 @@ class Board {
 		for (int i = 0; i < this.getPts().length; i++) {
 			this.getPts()[i] = Intersection.EMPTY;
 		}
-		this.visited = new HashSet<Integer>();
-		this.booPar = new boolean[this.getPts().length];
 	}
 
 	/* return the piece at the given row and col */
@@ -130,8 +124,8 @@ class Board {
 		}
 		
 		return Intersection.EMPTY; 
-	} 
- 
+	}
+
 	/*
 	 * Switches between player 1 and 2
 	 */
@@ -152,17 +146,14 @@ class Board {
 		if (this.offBoard(loc, hDir, vDir)){
 			return true; 
 		}
-		if( (getPts()[listPos] == color) && ( !this.visited.contains(listPos)  )) {
-			this.visited.add(loc);
-			return checkSurr(listPos, color);  
+		if( getPts()[listPos] == color ) {
+			return checkSurrInDir(listPos, vDir, hDir, color);
 		}
-		else if( (getPts()[listPos] == color) && ( this.visited.contains(listPos)  )) {
-			return true; 
-		}
-		else if( getPts()[listPos] == Intersection.EMPTY ) {
-			return checkSurr(listPos, color);  
+		else if( getPts()[listPos] == Intersection.EMPTY) {
+			return false;
 		}
 		else {
+
 			return true;
 		}
 	}
@@ -202,15 +193,15 @@ class Board {
 
 	}
 	
-	public boolean[] checkAllSurr(Intersection color){ // need to write test cases and evaluate helper methods. 
+	public boolean[] checkAllSurr(Intersection color){ // need to write test cases and evaluate helper methods.
+		boolean[] s = new boolean[this.getPts().length]; 
 		for(int i = 0; i < this.getPts().length; i++) {
-			if(checkSurr(i, color) && this.getPts()[i] == color ) {
-				this.booPar[i] = true;
+			if(checkSurr(i, color) && this.getPts()[i] == color) {
+				s[i] = true; 
 			}
 		}
 		
-		this.visited.clear(); 
-		return this.booPar;
+		return s; 
 	}
 	
 	
