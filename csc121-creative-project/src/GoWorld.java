@@ -3,7 +3,6 @@ package src;
 import java.io.File;
 import java.io.*;  
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 import processing.core.PApplet;
 import processing.event.KeyEvent;
@@ -62,28 +61,14 @@ public class GoWorld {
 			}
 			pw.close();
 		} catch(IOException exp) {
-			System.out.println("Problem saving stones: " + exp.getMessage());}
+			System.out.println("Problem saving tiles: " + exp.getMessage());}
 	}
 
 		
 		
 	public void loadTiles() {
 		//TODO
-		try {
-			Scanner sc = new Scanner(new File("output.txt"));
-			this.board.pts.clear();
-			
-			while(sc.hasNextInt()) {
-				Intersection inter = new Intersection(sc);
-				
-			}
-			
-			sc.close();
-			
-		}catch(IOException exp) {
-			
-			System.out.println("Problem loading stones: " + exp.getMessage());
-		}
+		
 	}
 
 	public GoWorld mousePressed(MouseEvent mev) {
@@ -110,9 +95,6 @@ public class GoWorld {
 	public void keyPressed(KeyEvent kev) {
 		if (Character.toLowerCase(kev.getKey()) == 's') {
 			saveTiles();
-		}
-		else if (Character.toLowerCase(kev.getKey()) == 'l') {
-			loadTiles();
 		}
 		}
 }
