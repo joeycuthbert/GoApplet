@@ -5,7 +5,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 class GoWorldTest {
-	Board testBoard = new Board(9, 9, 0); 
+	Board testBoard = new Board(9, 9, 0);
+	Board testBoard2 = new Board(9, 9, 0);
 	@Test
 	void testConversions() {
 		// (200, 111)  ====>  (1, 2)
@@ -90,6 +91,14 @@ class GoWorldTest {
 		assertFalse(testBoard.checkSurr(testBoard.getLoc(1,8), Intersection.WHITE));
 		assertFalse(testBoard.checkSurr(testBoard.getLoc(0,8), Intersection.BLACK));
 		
+		
+		testBoard2.set(0, 0, Intersection.WHITE);
+		testBoard2.set(1, 0, Intersection.WHITE);
+		testBoard2.set(0, 1, Intersection.BLACK);
+		testBoard2.set(2, 0, Intersection.BLACK); 
+		
+		assertFalse(testBoard2.checkSurr(testBoard2.getLoc(0, 0), Intersection.WHITE)); 
+		
 	}
 	
 	@Test 
@@ -122,6 +131,19 @@ class GoWorldTest {
 		testArr[testBoard.getLoc(0, 8)] = true; 
 		
 		assertTrue(Arrays.equals(testArr, testBoard.checkAllSurr(Intersection.WHITE))); 
+		
+		
+		testBoard2.set(0, 0, Intersection.WHITE);
+		testBoard2.set(1, 0, Intersection.WHITE);
+		testBoard2.set(0, 1, Intersection.BLACK);
+		testBoard2.set(2, 0, Intersection.BLACK); 
+		
+		boolean[] testArr2 = new boolean[81];
+		testArr2[testBoard2.getLoc(0, 0)] = true;
+		
+		// System.out.println(testArr2); 
+		
+		assertFalse(Arrays.equals(testArr2, testBoard2.checkAllSurr(Intersection.WHITE))); 
 		
 	
 	}

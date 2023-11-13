@@ -1,4 +1,9 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.*;
+
 import processing.core.PApplet;
+import processing.event.KeyEvent;
 import processing.event.MouseEvent; 
 
 public class GoWorld {
@@ -41,6 +46,30 @@ public class GoWorld {
 	public static int physicalX(int col) {
 		return (col * GRID_SIZE) + GRID_MARGIN;
 	}
+	
+	public void saveTiles() {
+	    try {
+	        String filename = javax.swing.JOptionPane.showInputDialog("Please enter file name:");
+	        filename = filename.trim();
+	        if (filename.equals("")) {
+	            javax.swing.JOptionPane.showMessageDialog(null, "Cannot save to a blank name");
+	            return;
+	        }
+	        if (! filename.endsWith(".txt")) {
+	            filename = filename + ".txt";
+	        }
+	        
+    	    PrintWriter pw = new PrintWriter(new File(filename));
+    	    
+    	    for (Intersection i : this.board.getPts()) {    // for-each
+    	        i.writeToFile(pw);
+    	    }
+    	    
+    	    pw.close();
+	    } catch (IOException exp) {
+	        System.out.println("Problem saving tiles: " + exp.getMessage());
+	    }
+	}
 
 	public GoWorld mousePressed(MouseEvent mev) {
 		int logCol = logicalCol(mev.getX()); 
@@ -61,5 +90,12 @@ public class GoWorld {
 		}
 		
 		return this;
+	}
+	
+	public void keyPressed(KeyEvent kev) {
+		switch (Character.toLowerCase(kev.getKey())) {
+			case 's': this.saveTiles(); break;
+			case 'o': this.loadTiles(); break;
+		}
 	}
 }
