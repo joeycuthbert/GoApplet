@@ -1,4 +1,11 @@
+package src;
+
+import java.io.File;
+import java.io.*;  
+import java.io.PrintWriter;
+
 import processing.core.PApplet;
+import processing.event.KeyEvent;
 import processing.event.MouseEvent; 
 
 public class GoWorld {
@@ -41,6 +48,28 @@ public class GoWorld {
 	public static int physicalX(int col) {
 		return (col * GRID_SIZE) + GRID_MARGIN;
 	}
+	
+	
+	public void saveTiles() {
+		//TODO
+		try {
+			PrintWriter pw = new PrintWriter(new File("output.txt"));
+
+			for (Intersection inter : this.board.getPts()) {
+				inter.writeToFile(pw);
+
+			}
+			pw.close();
+		} catch(IOException exp) {
+			System.out.println("Problem saving tiles: " + exp.getMessage());}
+	}
+
+		
+		
+	public void loadTiles() {
+		//TODO
+		
+	}
 
 	public GoWorld mousePressed(MouseEvent mev) {
 		int logCol = logicalCol(mev.getX()); 
@@ -62,4 +91,10 @@ public class GoWorld {
 		
 		return this;
 	}
+	
+	public void keyPressed(KeyEvent kev) {
+		if (Character.toLowerCase(kev.getKey()) == 's') {
+			saveTiles();
+		}
+		}
 }

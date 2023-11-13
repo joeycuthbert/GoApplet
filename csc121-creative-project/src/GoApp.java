@@ -1,3 +1,5 @@
+package src;
+
 import processing.core.*;
 import processing.event.*;
 
