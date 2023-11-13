@@ -1,13 +1,14 @@
 package src;
 
 import java.io.File;
+
 import java.io.*;  
 import java.io.PrintWriter;
 
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent; 
-
+import java.util.Scanner;
 public class GoWorld {
 	private Board board;
 
@@ -68,6 +69,21 @@ public class GoWorld {
 		
 	public void loadTiles() {
 		//TODO
+		try {
+			Scanner sc = new Scanner(new File("output.txt"));
+			this.board.pts.clear();
+			
+			while(sc.hasNextInt()) {
+				Intersection inter = new Intersection(sc);
+				
+			}
+			
+			sc.close();
+			
+		}catch(IOException exp) {
+			
+			System.out.println("Problem loading stones: " + exp.getMessage());
+		}
 		
 	}
 
