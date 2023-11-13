@@ -1,5 +1,8 @@
 import java.util.HashSet;
 import java.util.Set;
+package src;
+
+import java.io.PrintWriter;
 
 import processing.core.PApplet;
 
@@ -209,7 +212,9 @@ class Board {
 		this.visited.clear(); 
 		return this.booPar;
 	}
-
+	
+	
+	
 	public Intersection[] getPts() {
 		return pts;
 	}
@@ -217,6 +222,12 @@ class Board {
 	public void setPts(Intersection[] pts) {
 		this.pts = pts;
 	}
+
+	public void writeToFile(PrintWriter pw) {
+		//TODO
+		pw.println( this.pts);
+	}
+	
 
 }
 

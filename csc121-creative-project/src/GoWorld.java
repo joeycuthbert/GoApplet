@@ -1,6 +1,8 @@
-import java.io.IOException;
+package src;
+
+import java.io.File;
+import java.io.*;  
 import java.io.PrintWriter;
-import java.io.*;
 
 import processing.core.PApplet;
 import processing.event.KeyEvent;
@@ -47,28 +49,26 @@ public class GoWorld {
 		return (col * GRID_SIZE) + GRID_MARGIN;
 	}
 	
+	
 	public void saveTiles() {
-	    try {
-	        String filename = javax.swing.JOptionPane.showInputDialog("Please enter file name:");
-	        filename = filename.trim();
-	        if (filename.equals("")) {
-	            javax.swing.JOptionPane.showMessageDialog(null, "Cannot save to a blank name");
-	            return;
-	        }
-	        if (! filename.endsWith(".txt")) {
-	            filename = filename + ".txt";
-	        }
-	        
-    	    PrintWriter pw = new PrintWriter(new File(filename));
-    	    
-    	    for (Intersection i : this.board.getPts()) {    // for-each
-    	        i.writeToFile(pw);
-    	    }
-    	    
-    	    pw.close();
-	    } catch (IOException exp) {
-	        System.out.println("Problem saving tiles: " + exp.getMessage());
-	    }
+		//TODO
+		try {
+			PrintWriter pw = new PrintWriter(new File("output.txt"));
+
+			for (Intersection inter : this.board.getPts()) {
+				inter.writeToFile(pw);
+
+			}
+			pw.close();
+		} catch(IOException exp) {
+			System.out.println("Problem saving tiles: " + exp.getMessage());}
+	}
+
+		
+		
+	public void loadTiles() {
+		//TODO
+		
 	}
 
 	public GoWorld mousePressed(MouseEvent mev) {
@@ -93,9 +93,8 @@ public class GoWorld {
 	}
 	
 	public void keyPressed(KeyEvent kev) {
-		switch (Character.toLowerCase(kev.getKey())) {
-			case 's': this.saveTiles(); break;
-			case 'o': this.loadTiles(); break;
+		if (Character.toLowerCase(kev.getKey()) == 's') {
+			saveTiles();
 		}
-	}
+		}
 }
