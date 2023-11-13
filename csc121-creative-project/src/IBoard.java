@@ -216,7 +216,7 @@ class Board {
 
 	public void writeToFile(PrintWriter pw) {
 		//TODO
-		pw.println( this.pts);
+		pw.println( this.pts + Intersection.getColor());
 	}
 	
 
