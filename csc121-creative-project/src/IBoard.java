@@ -1,29 +1,10 @@
-package src;
-
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
 
 import processing.core.PApplet;
 
-enum Intersection {
-	EMPTY, WHITE, BLACK;
-
-	public PApplet draw(PApplet c, int x, int y) {
-		if (this != EMPTY) {
-			if (this == WHITE) {
-				c.stroke(225);
-				c.fill(255);
-
-			} else if (this == BLACK) {
-				c.stroke(0);
-				c.fill(0);
-			}
-
-			c.circle(x, y, GoWorld.STONE_SIZE );
-		}
-
-		return c;
-	}
-}
 
 class Board {
 	private Intersection[] pts; // the intersection points on the board
@@ -31,6 +12,18 @@ class Board {
 	private int cols;
 	private int player; 
 
+	
+	public Board(Scanner sc) {
+        this.rows = sc.nextInt();
+        this.cols = sc.nextInt();
+        this.player = sc.nextInt();
+        
+        setPts(new Intersection[(this.rows) * (this.cols)]);  
+        for (int i = 0; i < this.getPts().length; i++) {
+			this.getPts()[i] = Intersection.valueOf(sc.next());
+		}
+        
+    }
 	/*
 	 * constructor for the Board class. Creates a 1d array of length(number of intersections)  and all intersections as empty
 	 */
@@ -204,7 +197,9 @@ class Board {
 		return s; 
 	}
 	
-	
+	public void clearArray() {
+		Arrays.fill(this.pts, null);
+	}
 	
 	public Intersection[] getPts() {
 		return pts;
@@ -214,11 +209,13 @@ class Board {
 		this.pts = pts;
 	}
 
-	public void writeToFile(PrintWriter pw) {
-		//TODO
-		pw.println( this.pts);
+
+	void writeToFile(PrintWriter pw) {
+		pw.println(this.rows + "\n" + this.cols + "\n" + this.player);
+		for (Intersection pt : this.pts) {
+			pw.println(pt.name());
+		}
 	}
-	
 
 }
 

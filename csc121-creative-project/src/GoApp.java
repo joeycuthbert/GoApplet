@@ -1,5 +1,3 @@
-package src;
-
 import processing.core.*;
 import processing.event.*;
 
@@ -22,6 +20,10 @@ public class GoApp extends PApplet {
 
     public void mousePressed(MouseEvent mev) {
         g = g.mousePressed(mev);
+    }
+    
+    public void keyPressed(KeyEvent kev) {
+    	g.keyPressed(kev);
     }
 
     public static void main(String[] args) {

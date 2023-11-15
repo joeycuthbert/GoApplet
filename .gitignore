@@ -1,4 +1,6 @@
 bin/
+*.txt
+
 
 # Compiled class file
 *.class

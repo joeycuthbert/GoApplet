@@ -1,5 +1,3 @@
-package src;
-
 import java.io.File;
 
 import java.io.*;  
@@ -49,43 +47,33 @@ public class GoWorld {
 	public static int physicalX(int col) {
 		return (col * GRID_SIZE) + GRID_MARGIN;
 	}
-	
-	
+
+
 	public void saveTiles() {
-		//TODO
+		System.out.println("Saving");
 		try {
-			PrintWriter pw = new PrintWriter(new File("output.txt"));
-
-			for (Intersection inter : this.board.getPts()) {
-				inter.writeToFile(pw);
-
-			}
+			String filename = javax.swing.JOptionPane.showInputDialog("Save as name");
+			PrintWriter pw = new PrintWriter(new File(filename + ".txt"));
+			this.board.writeToFile(pw);
 			pw.close();
 		} catch(IOException exp) {
-			System.out.println("Problem saving tiles: " + exp.getMessage());}
+			System.out.println("Problem saving tiles: " + exp.getMessage());
+		}
 	}
 
-		
-		
+
+	
 	public void loadTiles() {
-		//TODO
 		try {
-			Scanner sc = new Scanner(new File("output.txt"));
-			this.board.pts.clear();
-			
-			while(sc.hasNextInt()) {
-				Intersection inter = new Intersection(sc);
-				
-			}
-			
+			String filename = javax.swing.JOptionPane.showInputDialog("Save as name");
+			Scanner sc = new Scanner(new File(filename + ".txt"));
+			this.board = new Board(sc);
 			sc.close();
-			
 		}catch(IOException exp) {
-			
 			System.out.println("Problem loading stones: " + exp.getMessage());
 		}
-		
 	}
+	 
 
 	public GoWorld mousePressed(MouseEvent mev) {
 		int logCol = logicalCol(mev.getX()); 
@@ -93,9 +81,9 @@ public class GoWorld {
 
 		if (this.board.get(logRow, logCol) == Intersection.EMPTY) {
 			board.set(logRow, logCol, this.board.getColor());  
-			
+
 			boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); 
-			
+
 			for(int i = 0; i < this.board.getPts().length; i++) {
 				if(deleteArr[i]) {
 					this.board.getPts()[i] = Intersection.EMPTY; 
@@ -104,13 +92,15 @@ public class GoWorld {
 
 			this.board.rotatePlayer();  // TODO: get rid of this
 		}
-		
+
 		return this;
 	}
-	
+
 	public void keyPressed(KeyEvent kev) {
 		if (Character.toLowerCase(kev.getKey()) == 's') {
-			saveTiles();
+			this.saveTiles();
+		} else if (Character.toLowerCase(kev.getKey()) == 'o') {
+			loadTiles();
 		}
-		}
+	}
 }
