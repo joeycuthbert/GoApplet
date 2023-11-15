@@ -1,4 +1,5 @@
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
@@ -132,15 +133,22 @@ class Board {
 	 * WHEN USNG THIS METHOD:
 	 *			vDir and hDir should be either -1, 0, or 1
 	 *			if vDir != 0, then hDir should equal 0 and vice versa
+	 *
+	 * original is true if it is the top-level, very first call from checkSurr() itself
 	 */
-	public boolean checkSurrInDir(int loc, int vDir, int hDir, Intersection color) {
+	public boolean checkSurrInDir(int loc, int vDir, int hDir, Intersection color, boolean[] checked) {
 		int listPos = loc + (vDir * this.cols) + hDir; 
 
 		if (this.offBoard(loc, hDir, vDir)){
 			return true; 
 		}
 		if( getPts()[listPos] == color ) {
-			return checkSurrInDir(listPos, vDir, hDir, color);
+			if (checked[listPos]) {
+				return checkSurrInDir(listPos, vDir, hDir, color, checked);
+			} else {
+				return checkSurr(listPos, color, checked) && 
+						checkSurrInDir(listPos, vDir, hDir, color, checked);
+			}
 		}
 		else if( getPts()[listPos] == Intersection.EMPTY) {
 			return false;
@@ -149,6 +157,24 @@ class Board {
 
 			return true;
 		}
+	}
+
+	/* color is the "my" color, so checking if surrounding by the other color, or edges of the board */
+	public boolean checkSurr(int loc, Intersection color) {
+		return checkSurr(loc, color, new boolean[this.cols * this.rows]); /* java will fill the booleans all in with false */
+	}
+	
+	/* color is the "my" color, so checking if surrounding by the other color, or edges of the board 
+	 *  checked will be a list of flags of `loc`s that have already had `checkSurr` called on them.
+	 * */
+	public boolean checkSurr(int loc, Intersection color, boolean[] checked) {
+		checked[loc] = true;
+		return 
+				this.checkSurrInDir(loc, 1, 0, color, checked) && 
+				this.checkSurrInDir(loc, -1, 0, color, checked) &&
+				this.checkSurrInDir(loc, 0, 1, color, checked) &&
+				this.checkSurrInDir(loc, 0, -1, color, checked); 
+
 	}
 
 	/*
@@ -177,14 +203,9 @@ class Board {
 		return false;
 	}
 
-	public boolean checkSurr(int loc, Intersection color) {
-		return 
-				this.checkSurrInDir(loc, 1, 0, color) && 
-				this.checkSurrInDir(loc, -1, 0, color) &&
-				this.checkSurrInDir(loc, 0, 1, color) &&
-				this.checkSurrInDir(loc, 0, -1, color); 
-
-	}
+	
+	
+	
 	
 	public boolean[] checkAllSurr(Intersection color){ // need to write test cases and evaluate helper methods.
 		boolean[] s = new boolean[this.getPts().length]; 

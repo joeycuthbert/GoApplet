@@ -18,6 +18,10 @@ public class GoApp extends PApplet {
         g.draw(this);
     }
 
+    public void mouseMoved(MouseEvent mev) {
+        g = g.mouseMoved(mev);
+    }
+    
     public void mousePressed(MouseEvent mev) {
         g = g.mousePressed(mev);
     }

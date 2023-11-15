@@ -9,6 +9,8 @@ import processing.event.MouseEvent;
 import java.util.Scanner;
 public class GoWorld {
 	private Board board;
+	private int prevX;  	// preview locations for the next tile
+	private int prevY;
 
 	public static int GRID_SIZE = 80;
 	public static int GRID_MARGIN = 30;
@@ -16,13 +18,17 @@ public class GoWorld {
 
 	public GoWorld(Board board) {
 		this.board = board;
+		this.prevX = -100;
+		this.prevY = -100;
 	}
 
 	/*
 	 * calls the draw method of the boards 
 	 */
 	public PApplet draw(PApplet c) { 
-		return board.draw(c);
+		board.draw(c);
+		this.board.getColor().draw(c, prevX, prevY);
+		return c;
 	}
 
 	/*
@@ -81,16 +87,20 @@ public class GoWorld {
 
 		if (this.board.get(logRow, logCol) == Intersection.EMPTY) {
 			board.set(logRow, logCol, this.board.getColor());  
-
-			boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); 
-
-			for(int i = 0; i < this.board.getPts().length; i++) {
-				if(deleteArr[i]) {
-					this.board.getPts()[i] = Intersection.EMPTY; 
+			if (this.board.checkSurr(board.getLoc(logRow, logCol), this.board.getColor())) {
+				board.set(logRow, logCol, Intersection.EMPTY);
+			} else {
+	
+				boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); 
+	
+				for(int i = 0; i < this.board.getPts().length; i++) {
+					if(deleteArr[i]) {
+						this.board.getPts()[i] = Intersection.EMPTY; 
+					}
 				}
+	
+				this.board.rotatePlayer();  // TODO: get rid of this
 			}
-
-			this.board.rotatePlayer();  // TODO: get rid of this
 		}
 
 		return this;
@@ -102,5 +112,11 @@ public class GoWorld {
 		} else if (Character.toLowerCase(kev.getKey()) == 'o') {
 			loadTiles();
 		}
+	}
+
+	public GoWorld mouseMoved(MouseEvent mev) {
+		this.prevX = mev.getX();
+		this.prevY = mev.getY();
+		return this;
 	}
 }
