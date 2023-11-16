@@ -7,10 +7,15 @@ import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent; 
 import java.util.Scanner;
+import java.util.Stack;
 public class GoWorld {
 	private Board board;
 	private int prevX;  	// preview locations for the next tile
 	private int prevY;
+	private Stack<Integer> undoStack;
+	private Stack<Integer> redoStack;
+	private Stack<Intersection> redoColStack;
+	private Stack<Intersection> undoColStack; 
 
 	public static int GRID_SIZE = 80;
 	public static int GRID_MARGIN = 30;
@@ -20,6 +25,12 @@ public class GoWorld {
 		this.board = board;
 		this.prevX = -100;
 		this.prevY = -100;
+		this.undoStack = new Stack<Integer>();
+		this.undoColStack = new Stack<Intersection>(); 
+		this.redoStack = new Stack<Integer>();
+		this.redoColStack = new Stack<Intersection>();
+		
+
 	}
 
 	/*
@@ -37,7 +48,7 @@ public class GoWorld {
 	public void drawCircle(PApplet c, float x, float y) {
 		int diameter = 60;
 		c.circle(x, y, diameter);
-	}
+	} 
 
 	/*
 	 * given the y-position of a supposed mouse click, return which row the stone should lie on
@@ -79,6 +90,29 @@ public class GoWorld {
 			System.out.println("Problem loading stones: " + exp.getMessage());
 		}
 	}
+	
+	public void undoMove() {
+		if (!undoStack.isEmpty()) {
+            int lastMove = this.undoStack.pop();
+            Intersection lastColor = this.undoColStack.pop(); 
+            
+            this.redoStack.push(lastMove);
+            this.redoColStack.push(lastColor);
+            this.board.getPts()[lastMove] = Intersection.EMPTY; 
+		}
+	}
+	
+	public void redoMove() {
+		if (!redoStack.isEmpty()) {
+            int nextMove = this.redoStack.pop();
+            Intersection nextColor = this.redoColStack.pop(); 
+            
+            this.undoStack.push(nextMove);
+            this.undoColStack.push(nextColor);
+
+            this.board.getPts()[nextMove] = nextColor; 
+        }
+	}
 	 
 
 	public GoWorld mousePressed(MouseEvent mev) {
@@ -86,7 +120,20 @@ public class GoWorld {
 		int logRow = logicalRow(mev.getY());
 
 		if (this.board.get(logRow, logCol) == Intersection.EMPTY) {
-			board.set(logRow, logCol, this.board.getColor());  
+			board.set(logRow, logCol, this.board.getColor());
+			
+			
+			if (this.undoStack != null) {
+	            // Now you can safely push an element onto the undoStack
+				this.undoStack.push(board.getLoc(logRow, logCol));
+				this.undoColStack.push(this.board.getColor());
+	        } else {
+	            // Handle the case where undoStack is not properly initialized
+	            System.out.println("Undo stack is not initialized!");
+	        }
+			
+			
+ 
 			if (this.board.checkSurr(board.getLoc(logRow, logCol), this.board.getColor())) {
 				board.set(logRow, logCol, Intersection.EMPTY);
 			} else {
@@ -99,7 +146,7 @@ public class GoWorld {
 					}
 				}
 	
-				this.board.rotatePlayer();  // TODO: get rid of this
+				this.board.rotatePlayer(); 
 			}
 		}
 
@@ -111,6 +158,11 @@ public class GoWorld {
 			this.saveTiles();
 		} else if (Character.toLowerCase(kev.getKey()) == 'o') {
 			loadTiles();
+		} else if ( Character.toLowerCase(kev.getKey()) == 'a') {
+			undoMove();
+		}
+		else if ( Character.toLowerCase(kev.getKey()) == 'd') {
+			redoMove();
 		}
 	}
 
