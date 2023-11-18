@@ -12,6 +12,8 @@ class Board {
 	private int rows;
 	private int cols;
 	private int player; 
+	private int blackScore; 
+	private int whiteScore;
 
 	
 	public Board(Scanner sc) {
@@ -22,8 +24,7 @@ class Board {
         setPts(new Intersection[(this.rows) * (this.cols)]);  
         for (int i = 0; i < this.getPts().length; i++) {
 			this.getPts()[i] = Intersection.valueOf(sc.next());
-		}
-        
+		}   
     }
 	/*
 	 * constructor for the Board class. Creates a 1d array of length(number of intersections)  and all intersections as empty
@@ -36,6 +37,9 @@ class Board {
 		for (int i = 0; i < this.getPts().length; i++) {
 			this.getPts()[i] = Intersection.EMPTY;
 		}
+		
+		this.blackScore = 0;
+		this.whiteScore = 0; 
 	}
 
 	/* return the piece at the given row and col */

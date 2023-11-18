@@ -96,22 +96,29 @@ public class GoWorld {
             int lastMove = this.undoStack.pop();
             Intersection lastColor = this.undoColStack.pop(); 
             
-            this.redoStack.push(lastMove);
             
             if( this.board.getPts()[lastMove] == Intersection.EMPTY) {
+            	this.redoStack.push(lastMove);
             	this.redoColStack.push(lastColor);
             	this.redoColStack.push(Intersection.EMPTY);
             	this.board.getPts()[lastMove] = lastColor;
+            	while ( undoColStack.peek() == lastColor) {
+            		 lastMove = this.undoStack.pop();
+                     lastColor = this.undoColStack.pop();
+                     this.redoStack.push(lastMove);
+                     this.redoColStack.push(lastColor);
+                 	 this.redoColStack.push(Intersection.EMPTY); 
+                 	 this.board.getPts()[lastMove] = lastColor;
+            	}
+            	
             }else { 
             	this.redoColStack.push(lastColor); 
+            	this.redoStack.push(lastMove);
             	this.board.getPts()[lastMove] = Intersection.EMPTY;
             }
-
-             
-             
 		}
 	}
-	
+	/*
 	public void redoMove() {
 		if (!redoStack.isEmpty()) {
             int nextMove = this.redoStack.pop();
@@ -120,14 +127,42 @@ public class GoWorld {
             if ( nextColor == Intersection.EMPTY ) {
             	nextColor = this.redoColStack.pop();
             	this.board.getPts()[nextMove] = Intersection.EMPTY;
+            			
             }else { this.board.getPts()[nextMove] = nextColor; }
             
             this.undoStack.push(nextMove);
-            
             this.undoColStack.push(nextColor);
-            
 		} 
     }
+	*/
+	void redoMove() {
+		if (!redoStack.isEmpty()) {
+            int nextMove = this.redoStack.pop();
+            Intersection nextColor = this.redoColStack.pop(); 
+            
+            if ( nextColor == Intersection.EMPTY ) {
+            	nextColor = this.redoColStack.pop();
+            	this.board.getPts()[nextMove] = Intersection.EMPTY;
+            	this.undoStack.push(nextMove);
+                this.undoColStack.push(nextColor);
+            	while( (redoColStack.size() >= 2) && (redoColStack.peek() == Intersection.EMPTY) ) {
+            		redoColStack.pop();
+            		nextColor = this.redoColStack.pop();
+            		nextMove = this.redoStack.pop();
+                	this.board.getPts()[nextMove] = Intersection.EMPTY;
+                	this.undoStack.push(nextMove);
+                    this.undoColStack.push(nextColor);
+            	}
+            			
+            }else { 
+            	this.board.getPts()[nextMove] = nextColor;
+            	this.undoStack.push(nextMove);
+                this.undoColStack.push(nextColor);
+                }
+            
+            
+		}
+	}
 	 
 
 	public GoWorld mousePressed(MouseEvent mev) {
