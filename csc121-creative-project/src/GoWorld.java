@@ -97,8 +97,18 @@ public class GoWorld {
             Intersection lastColor = this.undoColStack.pop(); 
             
             this.redoStack.push(lastMove);
-            this.redoColStack.push(lastColor);
-            this.board.getPts()[lastMove] = Intersection.EMPTY; 
+            
+            if( this.board.getPts()[lastMove] == Intersection.EMPTY) {
+            	this.redoColStack.push(lastColor);
+            	this.redoColStack.push(Intersection.EMPTY);
+            	this.board.getPts()[lastMove] = lastColor;
+            }else { 
+            	this.redoColStack.push(lastColor); 
+            	this.board.getPts()[lastMove] = Intersection.EMPTY;
+            }
+
+             
+             
 		}
 	}
 	
@@ -107,42 +117,45 @@ public class GoWorld {
             int nextMove = this.redoStack.pop();
             Intersection nextColor = this.redoColStack.pop(); 
             
+            if ( nextColor == Intersection.EMPTY ) {
+            	nextColor = this.redoColStack.pop();
+            	this.board.getPts()[nextMove] = Intersection.EMPTY;
+            }else { this.board.getPts()[nextMove] = nextColor; }
+            
             this.undoStack.push(nextMove);
+            
             this.undoColStack.push(nextColor);
-
-            this.board.getPts()[nextMove] = nextColor; 
-        }
-	}
+            
+		} 
+    }
 	 
 
 	public GoWorld mousePressed(MouseEvent mev) {
 		int logCol = logicalCol(mev.getX()); 
 		int logRow = logicalRow(mev.getY());
 
-		if (this.board.get(logRow, logCol) == Intersection.EMPTY) {
-			board.set(logRow, logCol, this.board.getColor());
+		if ((this.board.get(logRow, logCol) == Intersection.EMPTY) && (this.redoStack.size() == 0)) {
+			board.set(logRow, logCol, this.board.getColor()); // place stone in pts array
 			
-			
-			if (this.undoStack != null) {
-	            // Now you can safely push an element onto the undoStack
-				this.undoStack.push(board.getLoc(logRow, logCol));
-				this.undoColStack.push(this.board.getColor());
-	        } else {
-	            // Handle the case where undoStack is not properly initialized
-	            System.out.println("Undo stack is not initialized!");
-	        }
-			
+
+			this.undoStack.push(board.getLoc(logRow, logCol)); // update the undoStack by pushing the recent move
+			this.undoColStack.push(this.board.getColor()); // update the undoStack by pushing the recent move
 			
  
 			if (this.board.checkSurr(board.getLoc(logRow, logCol), this.board.getColor())) {
-				board.set(logRow, logCol, Intersection.EMPTY);
+				board.set(logRow, logCol, Intersection.EMPTY); // if the move you are trying to make ends in the stone being immediately captured, do not allow the move by setting the corresponding index in the pts array to EMPTY
 			} else {
-	
-				boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); 
+				boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor()); // parallel array, stores the boolean value for if a stone should be captured after the recent move 
 	
 				for(int i = 0; i < this.board.getPts().length; i++) {
 					if(deleteArr[i]) {
-						this.board.getPts()[i] = Intersection.EMPTY; 
+						this.undoColStack.push(this.board.getPts()[i]); // update the colored undo stack
+						this.undoStack.push(i); // update the undo stack
+						this.board.getPts()[i] = Intersection.EMPTY; // stone at i is captured, set its intersection to empty 
+						System.out.println("Undo Stack:");
+						System.out.println(this.undoStack);
+						System.out.println("Undo Color Stack:");
+						System.out.println(this.undoColStack);
 					}
 				}
 	
@@ -160,9 +173,25 @@ public class GoWorld {
 			loadTiles();
 		} else if ( Character.toLowerCase(kev.getKey()) == 'a') {
 			undoMove();
+			System.out.println("Undo Stack:");
+			System.out.println(this.undoStack);
+			System.out.println("Undo Color Stack:");
+			System.out.println(this.undoColStack);
+			System.out.println("Redo Stack:");
+			System.out.println(this.redoStack);
+			System.out.println("Redo Color Stack:");
+			System.out.println(this.redoColStack);
 		}
 		else if ( Character.toLowerCase(kev.getKey()) == 'd') {
 			redoMove();
+			System.out.println("Undo Stack:");
+			System.out.println(this.undoStack);
+			System.out.println("Undo Color Stack:");
+			System.out.println(this.undoColStack);
+			System.out.println("Redo Stack:");
+			System.out.println(this.redoStack);
+			System.out.println("Redo Color Stack:");
+			System.out.println(this.redoColStack);
 		}
 	}
 
