@@ -14,7 +14,7 @@ public class GoApp extends PApplet {
     }
 
     public void draw() {        
-        // g = g.update(); 
+        g = g.update(); 
         g.draw(this);
     }
 

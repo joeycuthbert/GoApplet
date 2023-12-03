@@ -11,7 +11,7 @@ class Board {
 	private Intersection[] pts; // the intersection points on the board
 	private int rows;
 	private int cols;
-	private int player; 
+	private int player;   // 0 or 1
 	private int blackScore; 
 	private int whiteScore;
 
@@ -43,7 +43,7 @@ class Board {
 	}
 
 	/* return the piece at the given row and col */
-	public Intersection get(int row, int col) {
+	public Intersection get(int row, int col) {	
 		return getPts()[(row * this.cols) + col];
 	}
 
@@ -61,6 +61,32 @@ class Board {
 	public int getLoc(int row, int col) {
 		return (row * this.cols) + col; 
 	}
+	
+	public void updateBlackScore() {
+		this.blackScore ++; 
+	}
+	
+	public void updateWhiteScire() {
+		this.whiteScore ++; 
+	}
+	
+	public void updateScore() {
+		if(this.getColor() == Intersection.BLACK) {
+			this.updateBlackScore();
+		}
+		else {
+			this.updateWhiteScire();
+		}
+	}
+	
+	public int getBlackScore() {
+		return this.blackScore;
+	}
+	
+	public int getWhiteScore() {
+		return this.whiteScore;
+	}
+	
 
 	/*
 	 * draws a 9x9 board
@@ -100,6 +126,10 @@ class Board {
         return c;
     }
 	
+
+	public int getPlayer() {
+		return this.player;
+	}
 	
 	public Intersection getColor() {
 		if(this.player == 0) {
@@ -207,9 +237,9 @@ class Board {
 		return false;
 	}
 
-	
-	
-	
+	public boolean isSuicide(int logCol, int logRow, Intersection color) {
+		return this.checkSurr(this.getLoc(logRow, logCol), this.getColor()); 
+	}
 	
 	public boolean[] checkAllSurr(Intersection color){ // need to write test cases and evaluate helper methods.
 		boolean[] s = new boolean[this.getPts().length]; 
@@ -241,6 +271,12 @@ class Board {
 			pw.println(pt.name());
 		}
 	}
-
+	public int rowOf(int move) {
+		return (move - this.colOf(move)) / 9;
+	}
+	
+	public int colOf(int move) {
+		return move % this.cols; 
+	}
 }
 
