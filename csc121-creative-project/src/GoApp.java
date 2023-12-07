@@ -1,3 +1,4 @@
+package src;
 import processing.core.*;
 import processing.event.*;
 
@@ -9,7 +10,7 @@ public class GoApp extends PApplet {
     }
 
     public void setup() {
-    	Board nineBoard = new Board(9,9, 0);
+    	Board nineBoard = new Board(9, 9, 0);
         g = new GoWorld(nineBoard);
     }
 

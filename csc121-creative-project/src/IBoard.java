@@ -1,3 +1,4 @@
+package src;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -277,6 +278,17 @@ class Board {
 	
 	public int colOf(int move) {
 		return move % this.cols; 
+	}
+	
+	//TODO
+	public boolean canCapture(int move) {
+		
+		return false;
+	}
+	
+	public boolean isGroup(int mvoe) {
+		
+		return false;
 	}
 }
 
