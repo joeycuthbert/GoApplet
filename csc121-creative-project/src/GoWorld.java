@@ -1,4 +1,4 @@
-package src;
+
 import java.io.File;
 import java.util.Random;
 
@@ -46,14 +46,23 @@ public class GoWorld {
 			
 			int row = this.board.rowOf(move);
 			int col = this.board.colOf(move);
+			/*
 			try {
                 Thread.sleep(500 + rgen.nextInt(1000));  // pause a random amt between .5 to 1.5 seconds,
             }
 			catch (Exception e) {
            // ignore
         }
+        */
+			
+			int time = rgen.nextInt(1000);
+			long timer = System.currentTimeMillis(); 
+			while(time != (System.currentTimeMillis() - timer)) {
+			} 
 			makeMove(row, col); 
 		}
+		
+		
 		
 		return this;
 	}

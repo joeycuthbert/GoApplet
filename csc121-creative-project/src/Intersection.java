@@ -1,4 +1,4 @@
-package src;
+
 import processing.core.PApplet;
 
 enum Intersection {
