@@ -290,5 +290,29 @@ class Board {
 		
 		return false;
 	}
+	
+	
+	public int countStones(Intersection color) {
+		int count = 0;
+		
+		for(Intersection point: this.pts) {
+			if ( point == color ) {
+				count ++; 
+			}
+		}
+		return count;
+	}
+	
+	/*
+	 * returns whether a point of the given color is in true in a boolean array
+	 */
+	public boolean needDelete(boolean[] arr, Intersection color) {
+		for(Boolean point: arr) {
+			if(point) {
+				return true; 
+			}
+		}
+		return false; 
+	}
 }
 

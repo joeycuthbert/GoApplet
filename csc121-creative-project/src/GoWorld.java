@@ -19,15 +19,15 @@ public class GoWorld {
 	private Stack<Integer> undoStack;
 	private Stack<Integer> redoStack;
 	private Stack<Intersection> redoColStack;
-	private Stack<Intersection> undoColStack; 
+	private Stack<Intersection> undoColStack;  
 
 	public static int GRID_SIZE = 80;
 	public static int GRID_MARGIN = 30;
 	public static int STONE_SIZE = 45;
 
 	public GoWorld(Board board) {
-		this.opponent = new RandomComputerPlayer(); 
-		//this.opponent = null; 
+		//this.opponent = new RandomComputerPlayer(); 
+		this.opponent = null; 
 		this.board = board;
 		this.prevX = -100;
 		this.prevY = -100;
@@ -78,6 +78,11 @@ public class GoWorld {
 			c.fill(255, 0, 0, 75);
 			c.rect(0, 0, 700, 700);
 		}
+		
+		c.textSize(16);
+        c.fill(0);
+		c.text("White: " + this.board.getWhiteScore(), 50, 725);
+		c.text("Black: " + this.board.getBlackScore(),  150, 725);
 		return c;
 	}
 
@@ -202,14 +207,34 @@ public class GoWorld {
 					this.undoStack.push(i); // update the undo stack
 					this.board.getPts()[i] = Intersection.EMPTY; // stone at i is captured, set its intersection to empty 
 					this.board.updateScore();
-					System.out.println(this.board.getBlackScore());
-					System.out.println(this.board.getWhiteScore()); 
 					}
 				}
 
 			this.board.rotatePlayer(); 
-		}
-	}
+		}else {
+			board.set(logRow, logCol, this.board.getColor());
+			boolean[] deleteArr = this.board.checkAllSurr(this.board.getOppColor());
+			
+			if(board.needDelete(deleteArr, board.getOppColor())) { 
+				this.undoStack.push(board.getLoc(logRow, logCol)); // update the undoStack by pushing the recent move
+				this.undoColStack.push(this.board.getColor()); // update the undoStack by pushing the recent move
+				
+				for(int i = 0; i < this.board.getPts().length; i++) {
+					if(deleteArr[i]) {
+						
+						this.undoColStack.push(this.board.getPts()[i]); // update the colored undo stack
+						this.undoStack.push(i); // update the undo stack
+						this.board.getPts()[i] = Intersection.EMPTY; // stone at i is captured, set its intersection to empty 
+						this.board.updateScore();
+						}
+					}
+
+				this.board.rotatePlayer(); 
+				} else { board.set(logRow, logCol, Intersection.EMPTY);
+						System.out.println("SUICIDE!!!");}
+				}
+			}
+			
 	public GoWorld mousePressed(MouseEvent mev) {
 		int logCol = logicalCol(mev.getX()); 
 		int logRow = logicalRow(mev.getY());

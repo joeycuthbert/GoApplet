@@ -126,6 +126,24 @@ class GoWorldTest {
 		
 	
 	}
+	
+	void testCountStones() {
+		testBoard.set(0, 1, Intersection.BLACK);
+		testBoard.set(2, 1, Intersection.BLACK);
+		testBoard.set(1, 0, Intersection.BLACK);
+		testBoard.set(1, 2, Intersection.BLACK);
+		testBoard.set(1, 1, Intersection.WHITE); // this white stone is completely surrounded by black stones 
+		testBoard.set(5, 6, Intersection.WHITE);
+		
+		assertEquals(testBoard.countStones(Intersection.BLACK), 4);
+		assertEquals(testBoard.countStones(Intersection.WHITE), 0);
+		
+		
+		testBoard.set(1, 1, Intersection.WHITE); // this white stone is completely surrounded by black stones 
+		testBoard.set(5, 6, Intersection.WHITE);
+		
+		assertEquals(testBoard.countStones(Intersection.WHITE), 2);
+	}
 	}
 //	@Test
 //	void testXPattern() {
@@ -264,3 +282,5 @@ class GoWorldTest {
 //		
 //	}
 //}
+
+
